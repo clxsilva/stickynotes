@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 // configuração do banco de dados
 // ip/link do servidor, autenticação, nome do banco
 // ao final da url, definir o nome do banco de dados
-const url = ''
+const url = 'mongodb+srv://admin:123Senac@cluster01.tfyg0.mongodb.net/noteclientes'
 
 // validação (evitar a abertura de várias conexões)
 let conectado = false
@@ -23,8 +23,10 @@ const conectar = async () => {
             await mongoose.connect(url) // conectar
             conectado = true // setar a variável
             console.log("MongoDB Connect")
+            return true
         } catch (error) {
             console.error(error)
+            return false
         }
     }
 }
@@ -38,8 +40,10 @@ const desconectar = async () => {
             await mongoose.disconnect(url) // desconectar
             conectado = false // setar a variável
             console.log("MongoDB Desconnect")
+            return true
         } catch (error) {
             console.error(error)
+            return false
         }
     }
 }

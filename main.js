@@ -53,16 +53,45 @@ function aboutWindow() {
     about = new BrowserWindow({
       width: 320,
       height: 280,
+      //autoHideMenuBar: true,
+      //resizable: false,
+      //minimizable: false,
+      // estabelecer uma relação hierárquica entre janelas
+      parent: mainWindow,
+      // criar uma janela modal (só retorna a principal quando encerrada)
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
+    })
+  }
+  about.loadFile('./src/views/sobre.html')
+}
+
+// janela nota
+let note
+function noteWindow() {
+  nativeTheme.themeSource = 'light'
+  // obter a janela principal
+  const mainWindow = BrowserWindow.getFocusedWindow()
+  // validação (se existir a janela principal)
+  if (mainWindow) {
+    note = new BrowserWindow({
+      width: 400,
+      height: 270,
       autoHideMenuBar: true,
       resizable: false,
       minimizable: false,
       // estabelecer uma relação hierárquica entre janelas
       parent: mainWindow,
       // criar uma janela modal (só retorna a principal quando encerrada)
-      modal: true
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
   }
-  about.loadFile('./src/views/sobre.html')
+  note.loadFile('./src/views/nota.html')
 }
 
 // Inicialização da aplicação (assincronismo)
@@ -73,14 +102,16 @@ app.whenReady().then(() => {
   // No MongoDB é mais eficiente manter uma única conexão aberta durante todo o tempo de vida do aplicativo e encerrar a conexão quando o aplicação for finalizar
   // Só ativar a janela principal se nenhuma outra estiver ativa
   ipcMain.on('db-connect', async (event) => {
-    // A linha abaixo estabelece conexão ao banco de dados
-    await conectar()
-    // Enviar ao renderizador uma mensagem para trocar a imagem do ícone do banco de dados (criar um delay de 0.5 ou 1s para sincronização com a nuvem)
-    setTimeout(() => {
-      // Enviar ao renderizador a mensagem "conectado"
-      // db-status (IPC - comunicação entre processos - preload.js)
-      event.reply('db-status', "conectado")
-    }, 500) // 500 = 0.5s
+    // A linha abaixo estabelece conexão com o banco de dados e verifica se foi conectado com sucesso (return true).
+    const conectado = await conectar()
+    if (conectado) {
+      // Enviar ao renderizador uma mensagem para trocar a imagem do ícone do banco de dados (criar um delay de 0.5 ou 1s para sincronização com a nuvem)
+      setTimeout(() => {
+        // Enviar ao renderizador a mensagem "conectado"
+        // db-status (IPC - comunicação entre processos - preload.js)
+        event.reply('db-status', "conectado")
+      }, 500) // 500 = 0.5s 
+    }
   })
 
   // Só ativa a janela principal se nenhuma outra estiver ativa
@@ -114,6 +145,7 @@ const template = [
       {
         label: 'Criar nota',
         accelerator: 'Ctrl+N',
+        click: () => noteWindow()
       },
       {
         type: 'separator'
