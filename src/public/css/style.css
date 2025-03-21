@@ -16,7 +16,7 @@
     --cinza: #6c757d;
     --footer: #f3f3f3;
 }
-
+ 
 /* CSS Reset */
 * {
     margin: 0;
@@ -24,12 +24,12 @@
     border: 0;
     box-sizing: border-box;
 }
-
+ 
 body {
-    font-family: "Archivo_Narrow";
+    font-family: "Fredoka";
     font-size: 1em;
 }
-
+ 
 .container {
     padding: 15px;
 }
@@ -45,37 +45,37 @@ button {
     right: 15px;
 }
 
-/** Rodapé 8**/
+/** Rodapé **/
 footer {
-    background-color: var(--cinza);
     width: 100%;
-    height: 25px;
-    padding: 3px;
+    height: 35px;
+    background-color: var(--cinza);
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    padding: 5px;
     position: fixed;
     bottom: 0;
-    align-items: center;
 }
-
+ 
 footer p {
-    color: #fff;
-    font-size: 1.0em;
+    font-size: 1.1em;
+    margin: 5px 0px 0px 5px;
 }
 
 /* Sobre */
-#sobre h3 {
+#sobre h3 { 
     color: var(--cinza);
     font-weight: 500;
 }
 
-/* Janela Nova nota */
+/* Janela Nova nota*/
 .novaNota {
     display: flex;
     flex-direction: column;
 }
 
-.novaNota input {
+.novaNota input{
     width: 355px;
     padding: 10px;
     margin: 10px 0px 20px 0px;
@@ -86,7 +86,6 @@ footer p {
 .novaNota select {
     margin-top: 10px;
     width: 150px;
-    padding: 7px;
-    border: 1px solid var(--cinza);
+    padding: 1px solid var(--cinza);
     border-radius: 5px;
 }

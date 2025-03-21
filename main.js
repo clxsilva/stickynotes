@@ -34,7 +34,7 @@ const createWindow = () => {
     }
   })
 
-  // carregar o menu personalizado
+  // Carregar o menu personalizado
   // ATENÇÃO: Antes importar o recurso Menu
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 
@@ -42,13 +42,13 @@ const createWindow = () => {
   win.loadFile('./src/views/index.html')
 }
 
-// janela sobre
+// Janela sobre
 let about
 function aboutWindow() {
   nativeTheme.themeSource = 'light'
-  // obter a janela principal
+  // Obter a janela principal
   const mainWindow = BrowserWindow.getFocusedWindow()
-  // validação (se existir a janela principal)
+  // Validação (se existir a janela principal)
   if (mainWindow) {
     about = new BrowserWindow({
       width: 320,
@@ -66,9 +66,17 @@ function aboutWindow() {
     })
   }
   about.loadFile('./src/views/sobre.html')
+
+  //recebimento da mensagem do renderizador da tela sobre para fechar a janela usando o botão 0K
+  ipcMain.on('about-exit', () => {
+    //validação (se existir a janela e ela não estiver destruida, fechar)
+    if (about && !about.isDestroyed()) {
+      about.close()
+    }
+  })
 }
 
-// janela nota
+// Janela nota
 let note
 function noteWindow() {
   nativeTheme.themeSource = 'light'
