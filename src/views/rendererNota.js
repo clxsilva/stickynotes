@@ -37,3 +37,20 @@ frmNote.addEventListener('submit', (event) => {
 
 // == Fim - CRUD Create ==============================
 // ===================================================
+
+
+// ===================================================
+// == Resetar o Formulário ===========================
+
+api.resetForm((args) => {
+    // Recarregar a página
+    location.reload()
+})
+
+// Uso da api resetForm quando salvar, editar ou excluir um cliente
+api.resetForm((args) => {
+    resetForm()
+})
+
+// == Fim - Resetar o Formulário =====================
+// ===================================================
