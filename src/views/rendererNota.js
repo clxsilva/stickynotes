@@ -43,8 +43,10 @@ frmNote.addEventListener('submit', (event) => {
 // == Resetar o Formulário ===========================
 
 api.resetForm((args) => {
-    // Recarregar a página
+    // Recarregar a página notas
     location.reload()
+    // Recarregar a página principal (atualizar notas)
+    api.updateList()
 })
 
 // Uso da api resetForm quando salvar, editar ou excluir um cliente
