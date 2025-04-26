@@ -2,12 +2,12 @@
  * preload.js - Usado no framework electron para aumentar a segurança e o desempenho
  */
 
-// Importação dos recursos do framework electron
-// IpcRenderer permite estabelecer uma comunicação entre processos (IPC) main.js <=> renderer.js
-// PontextBridge: permissões de comunicação entre processos usando a api do electron
+// importação dos recursos do framework electron
+// ipcRenderer permite estabelecer uma comunicação entre processos (IPC) main.js <=> renderer.js
+// contextBridge: permissões de comunicação entre processos usando a api do electron
 const { ipcRenderer, contextBridge } = require('electron')
 
-// Permissões para estabelecer a comunicação entre processos
+//permissões para estabelecer a comunicação entre processos
 contextBridge.exposeInMainWorld('api', {
     dbConnect: () => ipcRenderer.send('db-connect'),
     dbStatus: (message) => ipcRenderer.on('db-status', message),
@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld('api', {
     listNotes: () => ipcRenderer.send('list-notes'),
     renderNotes: (notes) => ipcRenderer.on('render-notes', notes),
     updateList: () => ipcRenderer.send('update-list'),
-    mainReload: (args) => ipcRenderer.on('main-reload', args)
+    mainReload: (args) => ipcRenderer.on('main-reload', args),
+    deleteNote: (id) => ipcRenderer.send('delete-note', id)
 })
 
