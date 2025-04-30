@@ -14,18 +14,18 @@ let arrayNotes = []
 const list = document.getElementById('listNotes')
 
 // inserção da data no rodapé
-function obterData() {
-    const data = new Date()
+function getDate() {
+    const date = new Date()
     const options = {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     }
-    return data.toLocaleDateString('pt-BR', options)
+    return date.toLocaleDateString('pt-BR', options)
 }
 
-document.getElementById('dataAtual').innerHTML = obterData()
+document.getElementById('currentDate').innerHTML = getDate()
 
 // Troca do ícone do banco de dados (status da conexão)
 // uso da api do preload.js
@@ -33,9 +33,9 @@ api.dbStatus((event, message) => {
     //teste de recebimento da mensagem
     console.log(message)
     if (message === "conectado") {
-        document.getElementById('iconeDB').src = "../public/img/dbon.png"
+        document.getElementById('iconDB').src = "../public/img/dbon.png"
     } else {
-        document.getElementById('iconeDB').src = "../public/img/dboff.png"
+        document.getElementById('iconDB').src = "../public/img/dboff.png"
     }
 })
 
@@ -54,21 +54,21 @@ api.renderNotes((event, notes) => {
     //JSON.parse converte de string para JSON
     const renderNotes = JSON.parse(notes)
     console.log(renderNotes) // teste de recebimento (passo 5)
-     // renderizar no index.html o conteúdo do array
-     arrayNotes = renderNotes // atribuir ao vetor o JSON recebido
-     // uso do laço forEach para percorrer o vetor e extrair os dados
-     arrayNotes.forEach((n) => {
+    // renderizar no index.html o conteúdo do array
+    arrayNotes = renderNotes // atribuir ao vetor o JSON recebido
+    // uso do laço forEach para percorrer o vetor e extrair os dados
+    arrayNotes.forEach((n) => {
         // adição de tags <li> no documento index.html
+        // var(--${n.cor}) aplica a cor definida nas variáveis CSS. Atenção! É necessário usar o mesmo nome armazenado no banco e nas variáveis CSS
         list.innerHTML += `
-            <br>
-            <li>
+             <li class="card" style="background-color: var(--${n.cor});">
                 <p onclick="deleteNote('${n._id}')" id="x">X</p>
-                <p>${n._id}</p>
+                <p id="code">${n._id}</p>
                 <p>${n.texto}</p>
-                <p>${n.cor}</p>
+                <p id="color">${n.cor}</p>
             </li>
         `
-     })
+    })
 })
 
 // == Fim - CRUD Read ==========================================
