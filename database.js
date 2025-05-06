@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const url = 'mongodb+srv://admin:123Senac@cluster01.tfyg0.mongodb.net/dbnote'
+const url = 'mongodb://localhost:27017'
 
 let connected = false
 const connectDB = async () => {
